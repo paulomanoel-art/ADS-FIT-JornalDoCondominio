@@ -1,0 +1,6 @@
+@FIT.JornalDoCondominio_HostAddress = http://localhost:5041
+
+GET {{FIT.JornalDoCondominio_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

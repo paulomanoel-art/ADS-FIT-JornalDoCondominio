@@ -1,0 +1,52 @@
+<app-header></app-header>
+<br />
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-8">
+      <div class="card shadow">
+        <div class="card-body">
+          <h4 class="card-title mb-4 text-center">Cadastrar Notícia</h4>
+
+          <div *ngIf="sucesso" class="alert alert-success">{{ sucesso }}</div>
+          <div *ngIf="erro" class="alert alert-danger">{{ erro }}</div>
+
+          <!-- Título -->
+          <div class="mb-3">
+            <label class="form-label">Título da Notícia</label>
+            <input
+              type="text"
+              [(ngModel)]="titulo"
+              class="form-control"
+              placeholder="Digite o título"
+            />
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Link da Imagem</label>
+            <input
+              type="text"
+              [(ngModel)]="imagemUrl"
+              class="form-control"
+              placeholder="Cole o link da imagem aqui"
+            />
+          </div>
+
+          <!-- Editor de Texto -->
+          <div class="mb-3">
+            <label class="form-label">Texto da Notícia</label>
+            <ngx-editor-menu [editor]="editor"></ngx-editor-menu>
+            <ngx-editor
+              [editor]="editor"
+              [(ngModel)]="conteudoHtml"
+              [placeholder]="'Digite o texto da notícia...'"
+              class="noticia-editor"
+            ></ngx-editor>
+          </div>
+
+          <button (click)="criarNoticia()" class="btn btn-primary w-30 mt-3">Cadastrar</button>
+        
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

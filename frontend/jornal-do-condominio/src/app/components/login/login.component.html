@@ -1,0 +1,40 @@
+<div class="container mt-5">
+  <div class="row justify-content-center">
+    <div class="col-md-4">
+      <div class="card shadow">
+        <div class="card-body">
+
+          <img style="width: 100%; margin-bottom: 10px;" src="assets/images/banner.png" />
+
+          <h4 class="card-title mb-4 text-center">Login Jornalista</h4>
+
+          <div *ngIf="erro" class="alert alert-danger">
+            {{ erro }}
+          </div>
+
+          <div class="mb-3">
+            <input 
+              type="email" 
+              [(ngModel)]="email" 
+              placeholder="E-mail" 
+              class="form-control" />
+          </div>
+
+          <div class="mb-3">
+            <input 
+              type="password" 
+              [(ngModel)]="senha" 
+              placeholder="Senha" 
+              class="form-control" />
+          </div>
+
+          <button 
+            (click)="login()" 
+            class="btn btn-primary w-100">
+            Entrar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
