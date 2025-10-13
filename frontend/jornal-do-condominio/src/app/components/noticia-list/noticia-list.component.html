@@ -1,0 +1,91 @@
+<div class="container mt-4">
+  
+  <img src="assets/images/banner.png" width="200"/>  
+  
+  <br /><br />
+  
+  <div class="row">
+    <!-- Lista de Notícias -->
+    <div class="col-md-8">
+      <div class="row">
+        <div class="col-md-6 mb-4" *ngFor="let noticia of noticias">
+          <div class="card h-100 shadow-sm">
+            <img
+              [src]="noticia.imagemUrl"
+              class="card-img-top"
+              style="height: 180px; object-fit: cover;"
+            />
+            <div class="card-body">
+              <h5 class="card-title">{{ noticia.titulo }}</h5>
+              <p class="card-text text-muted">
+                {{ noticia.resumo }}
+              </p>
+              <button
+                class="btn btn-outline-primary btn-sm"
+                (click)="abrirModal(noticia)"
+              >
+                Ler mais
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card de Inscrição -->
+    <div class="col-md-4">
+      <div class="card shadow-sm">
+        <div class="card-body text-center">
+          <h5 class="card-title mb-3">Receba nossas notícias</h5>
+          <p class="text-muted small mb-3">
+            Cadastre seu e-mail para ser avisado quando publicarmos novas matérias.
+          </p>
+          <input
+            type="email"
+            class="form-control mb-2"
+            placeholder="Seu e-mail"
+            [(ngModel)]="email"
+          />
+          <button class="btn btn-success w-100" (click)="inscrever()">
+            Inscrever-se
+          </button>
+          <div *ngIf="mensagem" class="alert alert-info mt-3 p-2">
+            {{ mensagem }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal da Notícia -->
+<div
+  class="modal fade"
+  id="noticiaModal"
+  tabindex="-1"
+  aria-labelledby="noticiaModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-lg modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">{{ noticiaSelecionada?.titulo }}</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <img
+          *ngIf="noticiaSelecionada?.imagemUrl"
+          [src]="noticiaSelecionada?.imagemUrl"
+          alt=""
+          class="img-fluid mb-3 rounded"
+        />
+        <div [innerHTML]="noticiaSelecionada?.conteudoHtml"></div>
+      </div>
+    </div>
+  </div>
+</div>

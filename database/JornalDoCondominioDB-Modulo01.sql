@@ -36,3 +36,9 @@ CREATE TABLE Noticias
     CONSTRAINT FK_Noticias_UsuarioAlteracao FOREIGN KEY (UsuarioAlteracaoId) REFERENCES Usuarios(Id)
 )
 GO
+
+SELECT * FROM Usuarios
+GO
+
+SELECT * FROM Noticias
+GO

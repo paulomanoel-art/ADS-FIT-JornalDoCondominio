@@ -2,13 +2,14 @@
 using FIT.JornalDoCondominio.DTOs;
 using FIT.JornalDoCondominio.Models;
 using FIT.JornalDoCondominio.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FIT.JornalDoCondominio.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    [SimpleAuth]
+    
     public class NoticiasController : ControllerBase
     {
         private readonly JornalDoCondominioDbContext _context;
@@ -18,6 +19,7 @@ namespace FIT.JornalDoCondominio.Controllers
             _context = context;
         }
 
+        [SimpleAuth]
         [HttpPost]
         public IActionResult CriarNoticia([FromBody] NoticiaCreateDTO dto)
         {
@@ -41,6 +43,37 @@ namespace FIT.JornalDoCondominio.Controllers
             _context.SaveChanges();
 
             return Ok(noticia);
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult Noticias()
+        {
+            var entity = _context.Noticias.ToList().Where(w => w.Ativo == true) .OrderByDescending(o => o.DataCriacao);
+
+            var response = new List<NoticiaResponseDTO>();
+            foreach(var noticia in entity)
+            {
+                response.Add(new NoticiaResponseDTO
+                {
+                    titulo = noticia.Titulo,
+                    resumo = noticia.Titulo,
+                    conteudoHtml = noticia.Texto,
+                    dataNoticia = noticia.DataCriacao,
+                    imagemUrl = noticia.FotoPath
+                });
+            }
+
+            return Ok(response);
+        }
+
+        [HttpPost("assinatura")]
+        [AllowAnonymous]
+        public IActionResult RegistrarAssinatura([FromBody] RegistrarAssinaturaDTO registrarAssinaturaDTO)
+        {
+            _context.Assinatura.Add(new Assinatura { Email = registrarAssinaturaDTO.email, DataCriacao = DateTime.Now });
+            _context.SaveChanges();
+            return Ok(new { mensagem = "Assinatura realizada com sucesso!" });
         }
     }
 }

@@ -9,5 +9,6 @@ namespace FIT.JornalDoCondominio.Data
 
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Noticia> Noticias { get; set; }
+        public DbSet<Assinatura> Assinatura { get; set; }
     }
 }
