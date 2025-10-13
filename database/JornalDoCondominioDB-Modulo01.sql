@@ -37,8 +37,17 @@ CREATE TABLE Noticias
 )
 GO
 
+CREATE TABLE Assinatura
+(
+	Id INT PRIMARY KEY IDENTITY(1,1),
+    Email VARCHAR(200) NOT NULL,
+    DataCriacao DATETIME NOT NULL,
+)
+
 SELECT * FROM Usuarios
 GO
 
 SELECT * FROM Noticias
 GO
+
+SELECT * FROM Assinatura
