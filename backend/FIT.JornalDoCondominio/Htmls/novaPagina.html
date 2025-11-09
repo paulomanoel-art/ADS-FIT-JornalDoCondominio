@@ -1,0 +1,107 @@
+﻿<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jornal do Condomínio - Novas Notícias</title>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            max-width: 600px;
+            background-color: #ffffff;
+            margin: 20px auto;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 0 8px rgba(0,0,0,0.1);
+        }
+
+        .header {
+            background-color: #2E7D32;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+            .header h1 {
+                margin: 0;
+                font-size: 22px;
+            }
+
+        .content {
+            padding: 20px;
+        }
+
+        .news {
+            margin-bottom: 25px;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 20px;
+        }
+
+            .news img {
+                width: 100%;
+                border-radius: 8px;
+                height: auto;
+            }
+
+            .news h2 {
+                font-size: 18px;
+                color: #2E7D32;
+                margin: 15px 0 10px;
+            }
+
+            .news p {
+                font-size: 14px;
+                color: #555;
+                line-height: 1.6;
+            }
+
+        .button {
+            display: inline-block;
+            padding: 10px 18px;
+            background-color: #2E7D32;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+
+        .footer {
+            background-color: #f4f4f4;
+            text-align: center;
+            font-size: 12px;
+            color: #777;
+            padding: 15px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="header">
+            <h1>📰 Jornal do Condomínio</h1>
+            <p>Nova notícia {{data.hora}}</p>
+        </div>
+
+        <div class="content">
+            <div class="news">
+                <h2>{{noticia.titulo}}</h2>
+                <p>{{noticia.mensagem}}</p>
+                <a href="{{noticia.link}}" class="button">Leia mais</a>
+            </div>
+        </div>
+
+        <div class="footer">
+            Você está recebendo este e-mail porque é assinante do Jornal do Condomínio Verde Vale.<br>
+            <a href="{{noticia.link.cancelar.assinatura}}" style="color:#2E7D32; text-decoration:none;">Cancelar assinatura</a>
+        </div>
+    </div>
+
+</body>
+</html>

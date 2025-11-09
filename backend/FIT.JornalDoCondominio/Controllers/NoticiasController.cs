@@ -42,12 +42,16 @@ namespace FIT.JornalDoCondominio.Controllers
             _context.Noticias.Add(noticia);
             _context.SaveChanges();
 
+            #region Enviar Notificação
+            new SendMailService(_context.Assinatura.Where(w => w.Ativo == true).ToList(), noticia);
+            #endregion
+
             return Ok(noticia);
         }
 
         [HttpGet]
         [AllowAnonymous]
-        public IActionResult Noticias()
+        public async Task<IActionResult> Noticias()
         {
             var entity = _context.Noticias.ToList().Where(w => w.Ativo == true) .OrderByDescending(o => o.DataCriacao);
 
@@ -71,9 +75,21 @@ namespace FIT.JornalDoCondominio.Controllers
         [AllowAnonymous]
         public IActionResult RegistrarAssinatura([FromBody] RegistrarAssinaturaDTO registrarAssinaturaDTO)
         {
-            _context.Assinatura.Add(new Assinatura { Email = registrarAssinaturaDTO.email, DataCriacao = DateTime.Now });
+            _context.Assinatura.Add(new Assinatura { Email = registrarAssinaturaDTO.email, DataCriacao = DateTime.Now, Ativo = true });
             _context.SaveChanges();
             return Ok(new { mensagem = "Assinatura realizada com sucesso!" });
+        }
+
+        [HttpDelete("cancelar-assinatura/{id}")]
+        [AllowAnonymous]
+        public IActionResult CancelarAssinatura([FromRoute] int id)
+        {
+            var entity = _context.Assinatura.Find(id);
+            entity.Ativo = false;
+            entity.DataCancelamento = DateTime.Now;
+            _context.SaveChanges();
+            
+            return Ok(new { mensagem = "Assinatura cancelada com sucesso!" });
         }
     }
 }

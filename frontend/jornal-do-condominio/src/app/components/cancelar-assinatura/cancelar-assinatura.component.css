@@ -1,0 +1,12 @@
+.card {
+  max-width: 500px;
+  margin: auto;
+}
+
+.btn {
+  font-weight: 500;
+}
+
+.alert {
+  font-size: 1rem;
+}
