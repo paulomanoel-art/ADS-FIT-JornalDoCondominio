@@ -51,6 +51,3 @@ SELECT * FROM Noticias
 GO
 
 SELECT * FROM Assinatura
-
-
-

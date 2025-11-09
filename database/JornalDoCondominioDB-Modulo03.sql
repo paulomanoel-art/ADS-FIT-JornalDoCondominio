@@ -44,6 +44,9 @@ CREATE TABLE Assinatura
     DataCriacao DATETIME NOT NULL,
 )
 
+ALTER TABLE Assinatura ADD Ativo bit
+UPDATE Assinatura SET Ativo = 1
+
 SELECT * FROM Usuarios
 GO
 
@@ -51,6 +54,4 @@ SELECT * FROM Noticias
 GO
 
 SELECT * FROM Assinatura
-
-
-
+GO

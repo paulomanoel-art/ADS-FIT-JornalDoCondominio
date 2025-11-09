@@ -42,6 +42,10 @@ namespace FIT.JornalDoCondominio.Controllers
             _context.Noticias.Add(noticia);
             _context.SaveChanges();
 
+            var listaDestinatarios = _context.Assinatura.ToList().Where(w => w.Ativo == true).Select(s => s.Email);
+            if (listaDestinatarios.Any())
+                new SendMailService(listaDestinatarios.ToList());
+
             return Ok(noticia);
         }
 
