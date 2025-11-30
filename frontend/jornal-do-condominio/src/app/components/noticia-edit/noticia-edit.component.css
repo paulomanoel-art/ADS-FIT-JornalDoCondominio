@@ -1,0 +1,3 @@
+.noticia-editor .ProseMirror {
+  min-height: 150px; /* altura para ~5 linhas */
+}

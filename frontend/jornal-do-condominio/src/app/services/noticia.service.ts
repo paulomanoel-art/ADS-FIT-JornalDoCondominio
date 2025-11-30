@@ -25,14 +25,55 @@ export class NoticiaService {
     return this.http.post<Noticia>(this.apiUrl, noticia, { headers });
   }
 
+  editarNoticia(noticia : Noticia) : Observable<any>  {
+    const usuario = this.authService.getUsuarioLogado();
+    if (!usuario) throw new Error('Usuário não autenticado');
+
+    const headers = new HttpHeaders()
+      .set('X-User-Email', usuario.emailLogin)
+      .set('X-User-Password', usuario.pwdLogin);
+
+    return this.http.put<Noticia>(this.apiUrl+'/editar-noticia', noticia, { headers });
+  }
+
+  CancelarNoticia(noticiaId: number): Observable<any> {
+    const usuario = this.authService.getUsuarioLogado();
+    if (!usuario) throw new Error('Usuário não autenticado');
+
+    const payload = {
+      id: noticiaId,
+      usuarioCriacaoId: usuario.id
+    };
+
+    const headers = new HttpHeaders()
+      .set('X-User-Email', usuario.emailLogin)
+      .set('X-User-Password', usuario.pwdLogin);
+
+    return this.http.post<any>(this.apiUrl + '/cancelar-noticia', payload, { headers });
+  }
+
   listarNoticias(): Observable<any> {
     const headers = new HttpHeaders()
     return this.http.get<any>(this.apiUrl);
   }
 
-  assinatura(assinatura : Assinatura): Observable<any> {
+  assinatura(assinatura: Assinatura): Observable<any> {
 
     return this.http.post<any>(this.apiUrl + '/assinatura', assinatura);
 
   }
+
+  ObterNoticia(noticiaId: number): Observable<any> {
+
+    const usuario = this.authService.getUsuarioLogado();
+    if (!usuario) throw new Error('Usuário não autenticado');
+
+    const headers = new HttpHeaders()
+      .set('X-User-Email', usuario.emailLogin)
+      .set('X-User-Password', usuario.pwdLogin);
+
+    return this.http.get<any>(this.apiUrl + '/obter-noticia/'+noticiaId, { headers });
+
+  }
+
 }

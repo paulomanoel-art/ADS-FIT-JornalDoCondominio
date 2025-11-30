@@ -49,6 +49,65 @@ namespace FIT.JornalDoCondominio.Controllers
             return Ok(noticia);
         }
 
+        [SimpleAuth]
+        [HttpPut("editar-noticia")]
+        public IActionResult EditarNoticia([FromBody] NoticiaCreateDTO dto)
+        {
+            if (String.IsNullOrEmpty(dto.Titulo))
+                return BadRequest("Informe o título da notícia!");
+
+            if (String.IsNullOrEmpty(dto.Texto))
+                return BadRequest("Informe o texto da notícia!");
+
+            var entity = _context.Noticias.Where(w => w.Id == dto.id).FirstOrDefault();
+
+
+            entity.Titulo = dto.Titulo;
+            entity.Texto = dto.Texto;
+            entity.FotoPath = dto.FotoPath;
+            entity.DataAlteracao = DateTime.Now;
+            entity.UsuarioAlteracaoId = dto.UsuarioCriacaoId;
+
+            _context.Noticias.Update(entity);
+            _context.SaveChanges();
+
+            return Ok();
+        }
+
+        [SimpleAuth]
+        [HttpPost("cancelar-noticia")]
+        public async Task<IActionResult> CancelarNoticia([FromBody] CancelarNoticiaDTO request)
+        {
+            var entity = _context.Noticias.Where(w => w.Id == request.id).FirstOrDefault();
+            entity.Ativo = false;
+            entity.DataAlteracao = DateTime.Now;
+            entity.UsuarioAlteracaoId = request.usuarioCriacaoId;
+            
+            _context.Noticias.Update(entity);
+            _context.SaveChanges();
+
+            return await Noticias();
+        }
+
+        [SimpleAuth]
+        [HttpGet("obter-noticia/{id}")]
+        public async Task<IActionResult> ObterNoticia([FromRoute] int id)
+        {
+            var entity = _context.Noticias.Where(w => w.Id == id).FirstOrDefault();
+
+            var response = new NoticiaResponseDTO
+            {
+                id = entity.Id,
+                titulo = entity.Titulo,
+                resumo = entity.Titulo,
+                conteudoHtml = entity.Texto,
+                dataNoticia = entity.DataCriacao,
+                imagemUrl = entity.FotoPath
+            };
+
+            return Ok(response);
+        }
+
         [HttpGet]
         [AllowAnonymous]
         public async Task<IActionResult> Noticias()
@@ -60,6 +119,7 @@ namespace FIT.JornalDoCondominio.Controllers
             {
                 response.Add(new NoticiaResponseDTO
                 {
+                    id = noticia.Id,
                     titulo = noticia.Titulo,
                     resumo = noticia.Titulo,
                     conteudoHtml = noticia.Texto,

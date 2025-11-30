@@ -22,7 +22,7 @@ export class LoginComponent {
     this.authService.login(this.email, this.senha).subscribe({
       next: user => {
         this.authService.setUsuarioLogado(user);
-        this.router.navigate(['/noticia-criar']);
+        this.router.navigate(['/controle-noticias']);
       },
       error: () => this.erro = 'Usuário ou senha inválidos'
     });

@@ -1,0 +1,77 @@
+<app-header></app-header>
+<br />
+<div class="container mt-3 py-5">
+    <div class="d-flex justify-content-between align-items-center w-100">
+        <h4 class="mb-3">Lista de Notícias</h4>
+        <button routerLink="/noticias" class="btn btn-outline-primary">Ir para página de Notícias</button>
+        <button routerLink="/noticia-criar" type="button" class="btn btn-primary">+ Incluir notícia</button>
+    </div>
+
+    <div class="table-responsive py-4">
+        <table class="table table-bordered table-hover align-middle">
+            <thead class="table-light">
+                <tr>
+                    <th style="width: 120px">Imagem</th>
+                    <th style="width: 150px">Título</th>
+                    <th>Texto da Notícia</th>
+                    <th style="width: 120px; text-align: center;">Publicação</th>
+                    <th style="width: 140px; text-align: center;">Ações</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let news of noticias">
+                    <td style="vertical-align: top;"><img [src]="news.imagemUrl || placeholder" alt="Imagem da notícia" class="img-fluid rounded" style="max-height: 80px" /></td>
+                    <td style="vertical-align: top;"><strong>{{ news.titulo }}</strong></td>
+                    <td style="vertical-align: top;">{{ news.conteudoHtml }}</td>
+                    <td style="vertical-align: top; text-align: center;">{{ news.dataNoticia | date:'dd/MM/yyyy HH:mm:ss' }}</td>
+                    <td style="vertical-align: top; text-align: center;">
+                        <button class="btn btn-sm btn-primary me-2" [routerLink]="'/noticia-editar/'+news.id">Editar</button>
+                        <button class="btn btn-sm btn-danger" (click)="abrirModalExcluir(news)">Excluir</button>
+                    </td>
+                </tr>
+                <tr *ngIf="noticias.length === 0">
+                    <td colspan="5" class="text-center text-muted">
+                        Nenhuma notícia cadastrada
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- Modal -->
+<div
+  class="modal fade show d-block"
+  tabindex="-1"
+  style="z-index: 1055"
+  *ngIf="noticiaSelecionada">
+
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Confirmar exclusão</h5>
+        <button type="button" class="btn-close" (click)="fecharModal()"></button>
+      </div>
+
+      <div class="modal-body">
+        <p>
+          Tem certeza que deseja excluir a notícia <br />
+          <strong>{{ noticiaSelecionada?.titulo }}</strong>?
+        </p>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-secondary" (click)="fecharModal()">Cancelar</button>
+        <button class="btn btn-danger" (click)="confirmarExcluir()">Excluir</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Backdrop -->
+<div
+  class="modal-backdrop fade show"
+  style="z-index: 1050"
+  *ngIf="noticiaSelecionada">
+</div>
+

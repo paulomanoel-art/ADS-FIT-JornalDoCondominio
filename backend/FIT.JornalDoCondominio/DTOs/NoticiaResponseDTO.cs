@@ -2,6 +2,7 @@
 {
     public class NoticiaResponseDTO
     {
+        public int id { get; set; }
         public string titulo { get; set; }
         public string imagemUrl { get; set; }
         public string resumo { get; set; }
